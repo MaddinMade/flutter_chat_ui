@@ -421,6 +421,8 @@ class _ChatState extends State<Chat> {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+
     return InheritedUser(
       user: widget.user,
       child: InheritedChatTheme(
@@ -436,18 +438,18 @@ class _ChatState extends State<Chat> {
                     Flexible(
                       child: widget.messages.isEmpty
                           ? SizedBox.expand(
-                              child: _emptyStateBuilder(),
-                            )
+                        child: _emptyStateBuilder(),
+                      )
                           : GestureDetector(
-                              onTap: () {
-                                FocusManager.instance.primaryFocus?.unfocus();
-                                widget.onBackgroundTap?.call();
-                              },
-                              child: LayoutBuilder(
-                                builder: (BuildContext context,
-                                        BoxConstraints constraints) =>
-                                    ChatList(
-                                  isLastPage: widget.isLastPage,
+                        onTap: () {
+                          FocusManager.instance.primaryFocus?.unfocus();
+                          widget.onBackgroundTap?.call();
+                        },
+                        child: LayoutBuilder(
+                          builder: (BuildContext context,
+                              BoxConstraints constraints) =>
+                              ChatList(
+                                isLastPage: widget.isLastPage,
                                   itemBuilder: (item, index) =>
                                       _messageBuilder(item, constraints),
                                   items: _chatMessages,
@@ -455,9 +457,11 @@ class _ChatState extends State<Chat> {
                                   onEndReachedThreshold:
                                       widget.onEndReachedThreshold,
                                   scrollPhysics: widget.scrollPhysics,
+                                  topPadding: mediaQuery.padding.top,
+                                  //bottomPadding: mediaQuery.padding.bottom,
                                 ),
-                              ),
-                            ),
+                        ),
+                      ),
                     ),
                     widget.customBottomWidget ??
                         Input(
@@ -467,7 +471,7 @@ class _ChatState extends State<Chat> {
                           onTextChanged: widget.onTextChanged,
                           onTextFieldTap: widget.onTextFieldTap,
                           sendButtonVisibilityMode:
-                              widget.sendButtonVisibilityMode,
+                          widget.sendButtonVisibilityMode,
                         ),
                   ],
                 ),

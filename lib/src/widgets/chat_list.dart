@@ -1,6 +1,7 @@
 import 'package:diffutil_dart/diffutil.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+
 import 'inherited_chat_theme.dart';
 import 'inherited_user.dart';
 
@@ -15,6 +16,8 @@ class ChatList extends StatefulWidget {
     this.onEndReached,
     this.onEndReachedThreshold,
     this.scrollPhysics,
+    this.topPadding = 0.0,
+    this.bottomPadding = 0.0,
   }) : super(key: key);
 
   /// Used for pagination (infinite scroll) together with [onEndReached].
@@ -41,6 +44,9 @@ class ChatList extends StatefulWidget {
 
   /// Determines the physics of the scroll view
   final ScrollPhysics? scrollPhysics;
+
+  final double topPadding;
+  final double bottomPadding;
 
   @override
   _ChatListState createState() => _ChatListState();
@@ -218,6 +224,9 @@ class _ChatListState extends State<ChatList>
         physics: widget.scrollPhysics,
         reverse: true,
         slivers: [
+          SliverToBoxAdapter(
+            child: SizedBox(height: widget.bottomPadding),
+          ),
           SliverPadding(
             padding: const EdgeInsets.only(bottom: 4),
             sliver: SliverAnimatedList(
@@ -259,6 +268,9 @@ class _ChatListState extends State<ChatList>
                 ),
               ),
             ),
+          ),
+          SliverToBoxAdapter(
+            child: SizedBox(height: widget.topPadding),
           ),
         ],
       ),
