@@ -475,6 +475,7 @@ class _ChatState extends State<Chat> {
                           onTextFieldTap: widget.onTextFieldTap,
                           sendButtonVisibilityMode:
                           widget.sendButtonVisibilityMode,
+                          keyboardType: widget.keyboardType,
                         ),
                   ],
                 ),

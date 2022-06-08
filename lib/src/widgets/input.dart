@@ -55,6 +55,8 @@ class Input extends StatefulWidget {
   /// Defaults to [SendButtonVisibilityMode.editing].
   final SendButtonVisibilityMode sendButtonVisibilityMode;
 
+  final TextInputType keyboardType;
+
 
   @override
   _InputState createState() => _InputState();
