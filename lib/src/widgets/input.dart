@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_chat_types/flutter_chat_types.dart' as types;
+
 import '../models/send_button_visibility_mode.dart';
 import 'attachment_button.dart';
 import 'inherited_chat_theme.dart';
@@ -27,6 +28,7 @@ class Input extends StatefulWidget {
     this.onTextChanged,
     this.onTextFieldTap,
     required this.sendButtonVisibilityMode,
+    this.keyboardType = TextInputType.multiline,
   }) : super(key: key);
 
   /// See [AttachmentButton.onPressed]
@@ -52,6 +54,7 @@ class Input extends StatefulWidget {
   /// [TextField] state inside the [Input] widget.
   /// Defaults to [SendButtonVisibilityMode.editing].
   final SendButtonVisibilityMode sendButtonVisibilityMode;
+
 
   @override
   _InputState createState() => _InputState();
@@ -144,7 +147,7 @@ class _InputState extends State<Input> {
                               InheritedL10n.of(context).l10n.inputPlaceholder,
                         ),
                     focusNode: _inputFocusNode,
-                    keyboardType: TextInputType.multiline,
+                    keyboardType: widget.keyboardType,
                     maxLines: 5,
                     minLines: 1,
                     onChanged: widget.onTextChanged,

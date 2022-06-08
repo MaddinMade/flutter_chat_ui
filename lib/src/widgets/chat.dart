@@ -67,6 +67,7 @@ class Chat extends StatefulWidget {
     this.timeFormat,
     this.usePreviewData = true,
     required this.user,
+    this.keyboardType = TextInputType.multiline,
   }) : super(key: key);
 
   /// See [Message.bubbleBuilder]
@@ -230,6 +231,8 @@ class Chat extends StatefulWidget {
 
   /// See [InheritedUser.user]
   final types.User user;
+
+  final TextInputType keyboardType;
 
   @override
   _ChatState createState() => _ChatState();
