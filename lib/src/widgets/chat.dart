@@ -136,7 +136,7 @@ class Chat extends StatefulWidget {
   final bool hideBackgroundOnEmojiMessages;
 
   /// See [Message.imageMessageBuilder]
-  final Widget Function(types.ImageMessage, {required int messageWidth})?
+  final Widget Function(types.ImageMessage, {required int messageWidth, required BorderRadius borderRadius})?
       imageMessageBuilder;
 
   /// See [Input.isAttachmentUploading]

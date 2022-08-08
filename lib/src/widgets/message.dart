@@ -67,7 +67,7 @@ class Message extends StatelessWidget {
   final bool hideBackgroundOnEmojiMessages;
 
   /// Build an image message inside predefined bubble
-  final Widget Function(types.ImageMessage, {required int messageWidth})?
+  final Widget Function(types.ImageMessage, {required int messageWidth, required BorderRadius borderRadius})?
       imageMessageBuilder;
 
   /// Any message type
@@ -165,28 +165,27 @@ class Message extends StatelessWidget {
   ) {
     return bubbleBuilder != null
         ? bubbleBuilder!(
-            _messageBuilder(),
+            _messageBuilder(borderRadius),
             message: message,
             nextMessageInGroup: roundBorder,
           )
         : enlargeEmojis && hideBackgroundOnEmojiMessages
-            ? _messageBuilder()
+            ? _messageBuilder(borderRadius)
             : Container(
                 decoration: BoxDecoration(
                   borderRadius: borderRadius,
-                  color: !currentUserIsAuthor ||
-                          message.type == types.MessageType.image
+                  color: message.type == types.MessageType.image ? null : (!currentUserIsAuthor
                       ? InheritedChatTheme.of(context).theme.secondaryColor
-                      : InheritedChatTheme.of(context).theme.primaryColor,
+                      : InheritedChatTheme.of(context).theme.primaryColor),
                 ),
                 child: ClipRRect(
                   borderRadius: borderRadius,
-                  child: _messageBuilder(),
+                  child: _messageBuilder(borderRadius),
                 ),
               );
   }
 
-  Widget _messageBuilder() {
+  Widget _messageBuilder(BorderRadius borderRadius) {
     switch (message.type) {
       case types.MessageType.custom:
         final customMessage = message as types.CustomMessage;
@@ -201,7 +200,7 @@ class Message extends StatelessWidget {
       case types.MessageType.image:
         final imageMessage = message as types.ImageMessage;
         return imageMessageBuilder != null
-            ? imageMessageBuilder!(imageMessage, messageWidth: messageWidth)
+            ? imageMessageBuilder!(imageMessage, messageWidth: messageWidth, borderRadius: borderRadius)
             : ImageMessage(message: imageMessage, messageWidth: messageWidth);
       case types.MessageType.text:
         final textMessage = message as types.TextMessage;
