@@ -96,7 +96,7 @@ class Message extends StatelessWidget {
   final Map<String, String>? imageHeaders;
 
   /// Build an image message inside predefined bubble.
-  final Widget Function(types.ImageMessage, {required int messageWidth})?
+  final Widget Function(types.ImageMessage, {required int messageWidth, required bool nextMessageInGroup})?
       imageMessageBuilder;
 
   /// Any message type.
@@ -336,7 +336,7 @@ class Message extends StatelessWidget {
       case types.MessageType.image:
         final imageMessage = message as types.ImageMessage;
         return imageMessageBuilder != null
-            ? imageMessageBuilder!(imageMessage, messageWidth: messageWidth)
+            ? imageMessageBuilder!(imageMessage, messageWidth: messageWidth, nextMessageInGroup: roundBorder)
             : ImageMessage(
                 imageHeaders: imageHeaders,
                 message: imageMessage,

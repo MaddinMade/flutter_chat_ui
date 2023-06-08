@@ -26,6 +26,7 @@ class TextMessage extends StatelessWidget {
     required this.showName,
     required this.usePreviewData,
     this.userAgent,
+    this.bodyTextStyle,
   });
 
   /// See [Message.emojiEnlargementBehavior].
@@ -56,6 +57,8 @@ class TextMessage extends StatelessWidget {
 
   /// User agent to fetch preview data with.
   final String? userAgent;
+
+  final TextStyle? bodyTextStyle;
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +141,9 @@ class TextMessage extends StatelessWidget {
     final bodyLinkTextStyle = user.id == message.author.id
         ? InheritedChatTheme.of(context).theme.sentMessageBodyLinkTextStyle
         : InheritedChatTheme.of(context).theme.receivedMessageBodyLinkTextStyle;
-    final bodyTextStyle = user.id == message.author.id
+    final bodyTextStyle = this.bodyTextStyle ?? (user.id == message.author.id
         ? theme.sentMessageBodyTextStyle
-        : theme.receivedMessageBodyTextStyle;
+        : theme.receivedMessageBodyTextStyle);
     final boldTextStyle = user.id == message.author.id
         ? theme.sentMessageBodyBoldTextStyle
         : theme.receivedMessageBodyBoldTextStyle;
